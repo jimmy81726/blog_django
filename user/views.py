@@ -1,5 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -32,3 +34,28 @@ def user_register(request):
             message = "註冊失敗"
 
     return render(request, "user/register.html", {"message": message})
+
+
+def user_login(request):
+    message = ""
+    if request.method == "POST":
+        if request.POST.get("register"):
+            return redirect("register")
+        if request.POST.get("login"):
+            username = request.POST.get("username")
+            password = request.POST.get("password")
+            user = authenticate(request, username=username, password=password)
+            print(user)
+            if not user:
+                message = "帳號或密碼錯誤,請重新輸入"
+            else:
+                login(request, user)
+                message = "登入成功"
+
+    return render(request, "user/login.html", locals())
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return redirect("index")

@@ -1,34 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>用戶註冊</title>
-</head>
-
-<body>
-    <form action="" method="POST">
-        {% csrf_token %}
-        <p>
-            <label for="username">用戶名:</label>
-            <input type="text" name="username" required>
-        </p>
-        <p>
-            <label for="email">電子信箱:</label>
-            <input type="email" name="email" required>
-        </p>
-        <p>
-            <label for="password1">密碼:</label>
-            <input type="password" name="password1" required>
-        </p>
-        <p>
-            <label for="password2">再次輸入密碼:</label>
-            <input type="password" name="password2" required>
-        </p>
-        <button type="submit">註冊</button>
-    </form>
-    {{message}}
-</body>
-
-</html>
+{% extends 'base.html' %}
+{% block title %}
+註冊頁面
+{% endblock %}
+{% block content %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <p>
+        <label for="username">用戶名:</label>
+        <input type="text" name="username" required>
+    </p>
+    <p>
+        <label for="email">電子信箱:</label>
+        <input type="email" name="email" required>
+    </p>
+    <p>
+        <label for="password1">密碼:</label>
+        <input type="password" name="password1" required>
+    </p>
+    <p>
+        <label for="password2">再次輸入密碼:</label>
+        <input type="password" name="password2" required>
+    </p>
+    <button type="submit">送出</button>
+</form>
+<p style="color: red;">{{message}}</p>
+{% endblock %}
