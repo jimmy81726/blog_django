@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class Post(models.Model):
@@ -10,6 +11,11 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title + " | " + str(self.author)
+
+    # 按下發布導向的網頁
+    def get_absolute_url(self):
+        # return reverse("article-detail", args=(str(self.id)))
+        return reverse("article-show")
 
 
 # class Comment(models.Model):

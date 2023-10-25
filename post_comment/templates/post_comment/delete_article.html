@@ -1,16 +1,17 @@
 {% extends 'base.html'%}
 {% block title%}
-撰寫文章
+刪除文章
 {% endblock %}
 {% block content %}
 
-<h1>撰寫文章</h1>
+<h1>刪除文章</h1>
 <br><br>
 <div class="form-group">
+    <p>確定要刪除 {{post.title}}?</p>
+    <small style="color: red;">是否確定?</small>
     <form action="" method="POST">
         {% csrf_token %}
-        {{form.as_p}}
-        <button>發布</button>
+        <button>刪除</button>
     </form>
 </div>
 {% endblock %}

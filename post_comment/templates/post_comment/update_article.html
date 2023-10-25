@@ -1,16 +1,16 @@
 {% extends 'base.html'%}
 {% block title%}
-撰寫文章
+更新文章
 {% endblock %}
 {% block content %}
 
-<h1>撰寫文章</h1>
+<h1>更新文章</h1>
 <br><br>
 <div class="form-group">
     <form action="" method="POST">
         {% csrf_token %}
         {{form.as_p}}
-        <button>發布</button>
+        <button>更新</button>
     </form>
 </div>
 {% endblock %}

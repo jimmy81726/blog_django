@@ -1,10 +1,13 @@
 {% extends 'base.html'%}
 {% block title%}
-{{user.username}}的部落格
+{{post.title}}
 {% endblock %}
 {% block content %}
 <h1> {{post.title}}</h1>
-<small>BY:{{post.author}}</small><br>
+<small>BY:{{post.author}}
+    <a href="{% url 'edit-article' post.pk %}">(Edit)</a>
+    <a href="{% url 'delete-article' post.pk %}">(Delete)</a>
+</small><br>
 <hr>
 <br>
 {{post.content}}

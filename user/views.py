@@ -4,7 +4,6 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 
 
-# Create your views here.
 def user_register(request):
     message = ""
     if request.method == "GET":
