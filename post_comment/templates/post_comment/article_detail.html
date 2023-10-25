@@ -1,0 +1,11 @@
+{% extends 'base.html'%}
+{% block title%}
+{{user.username}}的部落格
+{% endblock %}
+{% block content %}
+<h1> {{post.title}}</h1>
+<small>BY:{{post.author}}</small><br>
+<hr>
+<br>
+{{post.content}}
+{% endblock %}

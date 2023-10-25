@@ -23,4 +23,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.index, name="index"),
     path("user/", include("user.urls")),
+    path("post-comment/", include("post_comment.urls")),
 ]

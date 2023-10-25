@@ -1,0 +1,22 @@
+{% extends 'base.html'%}
+{% block title%}
+{{user.username}}的部落格
+{% endblock %}
+{% block content %}
+
+
+<!-- 模板上下文變量預設object_list -->
+{% for post in object_list %}
+<li>
+    <a href="{% url 'article-detail' post.pk %}">{{post.title}}</a> - {{post.author}} <br>
+
+    {{post.content}}
+</li>
+
+{% endfor %}
+
+
+
+
+
+{% endblock %}

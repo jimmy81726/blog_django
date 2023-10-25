@@ -45,14 +45,21 @@ def user_login(request):
             username = request.POST.get("username")
             password = request.POST.get("password")
             user = authenticate(request, username=username, password=password)
-            print(user)
             if not user:
                 message = "帳號或密碼錯誤,請重新輸入"
             else:
                 login(request, user)
                 message = "登入成功"
+                # url在不同專案的寫法,urls.py也要寫好
+                return redirect("article-show")
 
     return render(request, "user/login.html", locals())
+
+
+@login_required
+def user_profile(request, id):
+    user = User.objects.get(pk=id)
+    return render(request, "user/profile.html", {"user": user})
 
 
 @login_required
