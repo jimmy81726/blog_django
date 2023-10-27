@@ -15,10 +15,11 @@ from django.urls import reverse_lazy
 
 class ArticleShow(ListView):
     model = Post
-    template_name = "./post_comment/articlepage.html"
+    template_name = "./post_comment/index.html"
     # ordering = ["-id"]
 
 
+# DetailView需要傳參數
 class ArticleDetailShow(DetailView):
     model = Post
     template_name = "./post_comment/article_detail.html"
@@ -43,3 +44,15 @@ class DelecteArticle(DeleteView):
     model = Post
     template_name = "./post_comment/delete_article.html"
     success_url = reverse_lazy("article-show")
+
+
+@login_required
+def user_post(request):
+    user = request.user
+    if user.is_authenticated:
+        # 讓Post的author去找User里篩選
+        user_posts = Post.objects.filter(author=user)
+
+    return render(
+        request, "./post_comment/user_article.html", {"user_posts": user_posts}
+    )

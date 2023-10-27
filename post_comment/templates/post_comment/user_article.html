@@ -1,0 +1,27 @@
+{% extends 'base.html'%}
+{% block title%}
+{{user.username}}的部落格
+{% endblock %}
+{% block content %}
+
+
+
+<h1>{{user.username}}的文章列表</h1>
+
+<!-- 迴圈取的所有文章,views已有用filter篩選 -->
+{% for post in user_posts %}
+<li>
+    <a href="{% url 'article-detail' post.pk %}">{{post.title}}</a> - 作者:{{post.author}} <br>
+
+    {{post.content}}
+    <!-- 只讓本人能看到自己的文章 -->
+    {% if user.is_authenticated %}
+    <small>
+        <a href="{% url 'edit-article' post.pk %}">(Edit)</a>
+        <a href="{% url 'delete-article' post.pk %}">(Delete)</a>
+    </small>
+    {% endif %}
+</li>
+
+{% endfor %}
+{% endblock %}

@@ -50,7 +50,7 @@ def user_login(request):
                 login(request, user)
                 message = "登入成功"
                 # url在不同專案的寫法,urls.py也要寫好
-                return redirect("article-show")
+                return redirect("index")
 
     return render(request, "user/login.html", locals())
 

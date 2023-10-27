@@ -6,15 +6,13 @@
 
 
 <!-- 模板上下文變量預設object_list -->
+<h1>最新文章....</h1>
 {% for post in object_list %}
+
 <li>
-    <a href="{% url 'article-detail' post.pk %}">{{post.title}}</a> - {{post.author}} <br>
+    <a href="{% url 'article-detail' post.pk %}">{{post.title}}</a> - 作者:{{post.author}} <br>
 
     {{post.content}}
-    <small>
-        <a href="{% url 'edit-article' post.pk %}">(Edit)</a>
-        <a href="{% url 'delete-article' post.pk %}">(Delete)</a>
-    </small>
 </li>
 
 {% endfor %}
