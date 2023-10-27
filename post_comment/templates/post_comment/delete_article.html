@@ -4,6 +4,7 @@
 {% endblock %}
 {% block content %}
 
+{% if user.is_authenticated and user == post.author %}
 <h1>刪除文章</h1>
 <br><br>
 <div class="form-group">
@@ -14,4 +15,9 @@
         <button>刪除</button>
     </form>
 </div>
+{% else %}
+
+<h1>請重新登入</h1>
+{% endif %}
+
 {% endblock %}

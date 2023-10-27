@@ -11,16 +11,20 @@
 <!-- 迴圈取的所有文章,views已有用filter篩選 -->
 {% for post in user_posts %}
 <li>
-    <a href="{% url 'article-detail' post.pk %}">{{post.title}}</a> - 作者:{{post.author}} <br>
-
-    {{post.content}}
-    <!-- 只讓本人能看到自己的文章 -->
-    {% if user.is_authenticated %}
-    <small>
-        <a href="{% url 'edit-article' post.pk %}">(Edit)</a>
-        <a href="{% url 'delete-article' post.pk %}">(Delete)</a>
+    <a href="{% url 'article-detail' post.pk %}">{{post.title}}</a><small>
+        -
+        {% if user.is_authenticated %}
+        <small>
+            <a href="{% url 'edit-article' post.pk %}">(Edit)</a>
+            <a href="{% url 'delete-article' post.pk %}">(Delete)</a>
+        </small>
+        {% endif %}
+        - 作者:{{post.author}}
+        - 最後更新時間:{{post.date_posted}}<br>
     </small>
-    {% endif %}
+    {{ post.content|slice:':50'|safe}}......
+
+
 </li>
 
 {% endfor %}

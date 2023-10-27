@@ -4,6 +4,7 @@
 {% endblock %}
 {% block content %}
 
+{% if user.is_authenticated %}
 <h1>撰寫文章</h1>
 <br><br>
 <div class="form-group">
@@ -13,4 +14,15 @@
         <button>發布</button>
     </form>
 </div>
+<!-- 一登入就讓作者欄抓到當下的使用者,author室外建要回傳id -->
+<script>
+    var name = "{{user.id}}";
+    document.getElementById("author").value = name;
+
+
+</script>
+{% else %}
+
+<h1>請重新登入</h1>
+{% endif %}
 {% endblock %}

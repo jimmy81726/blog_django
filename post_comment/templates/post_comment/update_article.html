@@ -4,13 +4,21 @@
 {% endblock %}
 {% block content %}
 
+<!-- 必須確認此文章的登入者才能更改 -->
+{% if user.is_authenticated and user == post.author %}
 <h1>更新文章</h1>
 <br><br>
 <div class="form-group">
     <form action="" method="POST">
         {% csrf_token %}
         {{form.as_p}}
+
         <button>更新</button>
     </form>
 </div>
+
+{% else %}
+
+<h1>請重新登入</h1>
+{% endif %}
 {% endblock %}

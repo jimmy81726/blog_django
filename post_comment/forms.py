@@ -10,7 +10,16 @@ class PostForm(forms.ModelForm):
             "title": forms.TextInput(
                 attrs={"class": "form-control", "placeholder": "請輸入標題"}
             ),
-            "autohr": forms.Select(attrs={"class": "form-control"}),
+            "author": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                    "value": "",
+                    "id": "author",
+                    # 讓作者欄為當下的登入者,且沒有更改必要就隱藏起來
+                    "type": "hidden",
+                }
+            ),
+            # "author": forms.Select(attrs={"class": "form-control"}),
             "content": forms.Textarea(
                 attrs={"class": "form-control", "placeholder": "請輸入評論"}
             ),

@@ -5,6 +5,7 @@
 {% block content %}
 <h1> {{post.title}}</h1>
 <small>BY:{{post.author}}
+    <!-- 此文章為登入者的才能更改 -->
     {% if user.is_authenticated and user == post.author %}
     <a href="{% url 'edit-article' post.pk %}">(Edit)</a>
     <a href="{% url 'delete-article' post.pk %}">(Delete)</a>
@@ -12,5 +13,5 @@
 </small><br>
 <hr>
 <br>
-{{post.content}}
+{{post.content|safe}}
 {% endblock %}

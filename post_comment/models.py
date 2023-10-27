@@ -15,7 +15,7 @@ class Post(models.Model):
     # 按下發布導向的網頁
     def get_absolute_url(self):
         # return reverse("article-detail", args=(str(self.id)))
-        return reverse("article-show")
+        return reverse("index")
 
 
 # class Comment(models.Model):
