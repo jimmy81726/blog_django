@@ -65,6 +65,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                # 用使方法,讓所有專案都可以使用此參數,post_comment app之下的context_processors.py
+                "post_comment.context_processors.category_list",
             ],
         },
     },

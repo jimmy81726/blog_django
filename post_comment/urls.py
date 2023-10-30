@@ -16,4 +16,7 @@ urlpatterns = [
     path("edit-article/<int:pk>", EditArticle.as_view(), name="edit-article"),
     path("delete-article/<int:pk>", DelecteArticle.as_view(), name="delete-article"),
     path("user-post/", views.user_post, name="user-post"),
+    path(
+        "category-article/<str:cate>", views.category_article, name="category-article"
+    ),
 ]

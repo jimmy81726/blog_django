@@ -18,7 +18,15 @@
 </div>
 
 {% else %}
+<script>
+    var originalUrl = 'user/login';
+    var cleanUrl = originalUrl.replace(/^\//, '');
 
-<h1>請重新登入</h1>
+    // 三秒後導向網頁
+    setTimeout(function () {
+        window.location.href = '/' + cleanUrl;
+    }, 3000);
+</script>
+請重新登入,網頁將重新導向...
 {% endif %}
 {% endblock %}

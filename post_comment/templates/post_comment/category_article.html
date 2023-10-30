@@ -1,0 +1,40 @@
+{% extends 'base.html'%}
+{% block title%}
+{{user.username}}的部落格
+{% endblock %}
+{% block content %}
+
+
+<!-- cated_post已被fliter篩選 -->
+<h1>所有 {{cate}} 的文章....</h1>
+{% if cated_posts %}
+{% for post in cated_posts %}
+
+<li>
+    <a href="{% url 'article-detail' post.pk %}">{{post.title}}</a>
+    <small>
+        - {{post.category}}
+        - 作者:{{post.author}}
+        - 發布時間:{{post.date_posted}}<br>
+    </small>
+    {{ post.content|slice:':50'|safe}}......<small><a href="{% url 'article-detail' post.pk %}">(更多)</a></small>
+
+</li>
+
+{% endfor %}
+
+{% else %}
+並無文章,網頁將重新導向...
+<!-- 先把網頁url前墜清空只是要導向首頁 -->
+<script>
+    var originalUrl = '';
+    var cleanUrl = originalUrl.replace(/^\//, '');
+
+    // 三秒後導向網頁
+    setTimeout(function () {
+        window.location.href = '/' + cleanUrl;
+    }, 3000);
+</script>
+{% endif %}
+
+{% endblock %}

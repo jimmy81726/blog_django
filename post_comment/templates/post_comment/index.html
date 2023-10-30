@@ -10,12 +10,15 @@
 {% for post in object_list %}
 
 <li>
-    <a href="{% url 'article-detail' post.pk %}">{{post.title}}</a><small>
+    <a href="{% url 'article-detail' post.pk %}">{{post.title}}</a>
+    <small>
+        - <a href="{% url 'category-article' post.category %}">{{post.category}}</a>
         - 作者:{{post.author}}
-        - 最後更新時間:{{post.date_posted}}<br>
-    </small>
-    {{ post.content|slice:':50'|safe}}......
+        - 發布時間:{{post.date_posted}}<br>
 
+        {{ post.content|slice:':50'|safe}}......<small><a href="{% url 'article-detail' post.pk %}">(更多)</a></small>
+        <br><br>
+    </small>
 </li>
 
 {% endfor %}
