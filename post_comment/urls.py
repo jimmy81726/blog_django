@@ -6,6 +6,7 @@ from .views import (
     WriteAritcle,
     EditArticle,
     DelecteArticle,
+    like_article,
 )
 
 urlpatterns = [
@@ -19,4 +20,5 @@ urlpatterns = [
     path(
         "category-article/<str:cate>", views.category_article, name="category-article"
     ),
+    path("like/<int:pk>", like_article, name="like-article"),
 ]

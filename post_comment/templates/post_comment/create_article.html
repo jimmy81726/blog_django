@@ -14,7 +14,7 @@
         <button>發布</button>
     </form>
 </div>
-<!-- 一登入就讓作者欄抓到當下的使用者,author室外建要回傳id -->
+<!-- 當下網頁的使用者資訊,回傳給form id=author,將value改成當下的使用者 -->
 <script>
     var name = "{{user.id}}";
     document.getElementById("author").value = name;

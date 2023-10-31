@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+
 from django.views.generic import (
     ListView,
     DetailView,
@@ -8,10 +8,27 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from .models import Post, Category
+from .models import Post
 from .forms import PostForm, EditForm
-from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.urls import reverse_lazy, reverse
+from django.http import HttpResponseRedirect
+
+
+def like_article(request, pk):
+    # 獲取form表單的button name為post_id
+    post_id = request.POST.get("post_id")
+    # 類似fliter只是找不到會顯示error404,且只能查找單一對象
+    post = get_object_or_404(Post, id=post_id)
+    # post的like與User利用add建立關聯,有點過就刪除,沒點過+1
+    liked = False
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+    else:
+        post.likes.add(request.user)
+        liked = True
+
+    # 改變導入網址
+    return HttpResponseRedirect(reverse("article-detail", args=[str(pk)]))
 
 
 class ArticleShow(ListView):
@@ -19,30 +36,35 @@ class ArticleShow(ListView):
     template_name = "./post_comment/index.html"
     ordering = ["-date_posted"]
 
-    # # 在class-based的基礎上要回傳值的方法def get_context_data,型態為QuerySet
-    # def get_context_data(self, *args, **kwards):
-    #     cate_list = Category.objects.all()
-    #     context = super(ArticleShow, self).get_context_data(*args, **kwards)
-    #     context["cate_list"] = cate_list
-    #     return context
-    # 此方法只能在訪問index的時候傳入
-
 
 # DetailView需要傳參數
 class ArticleDetailShow(DetailView):
     model = Post
     template_name = "./post_comment/article_detail.html"
 
+    # 在class-based的基礎上要回傳值的方法def get_context_data,型態為QuerySet
+    def get_context_data(self, *args, **kwards):
+        postlike = get_object_or_404(Post, id=self.kwargs["pk"])
+        # 把父類的參數抓下來
+        context = super(ArticleDetailShow, self).get_context_data(*args, **kwards)
+        total_likes = postlike.total_likes()
 
-class WriteAritcle(LoginRequiredMixin, CreateView):
+        liked = False
+        # 用到manytomany的方法去檢察關聯性
+        if postlike.likes.filter(id=self.request.user.id).exists():
+            liked = True
+
+        context["liked"] = liked
+        context["total_likes"] = total_likes
+        return context
+
+
+class WriteAritcle(CreateView):
     model = Post
     form_class = PostForm
     template_name = "./post_comment/create_article.html"
     # 把model的所有欄位顯示
     # fields = "__all__"
-    # def form_valid(self, form):
-    #     form.instance.author = self.request.user
-    #     return super().form_valid(form)
 
 
 class EditArticle(UpdateView):
@@ -55,6 +77,7 @@ class EditArticle(UpdateView):
 class DelecteArticle(DeleteView):
     model = Post
     template_name = "./post_comment/delete_article.html"
+    # 刪除完重新導向index
     success_url = reverse_lazy("index")
 
 
@@ -62,7 +85,7 @@ class DelecteArticle(DeleteView):
 def user_post(request):
     user = request.user
     if user.is_authenticated:
-        # 讓Post的author去找User里篩選
+        # 讓Post的author去利用request.user篩選
         user_posts = Post.objects.filter(author=user).order_by("-date_posted")
 
     return render(

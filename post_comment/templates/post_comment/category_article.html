@@ -13,7 +13,7 @@
 <li>
     <a href="{% url 'article-detail' post.pk %}">{{post.title}}</a>
     <small>
-        - {{post.category}}
+        - <a href="{% url 'category-article' post.category %}">{{post.category}}</a>
         - 作者:{{post.author}}
         - 發布時間:{{post.date_posted}}<br>
     </small>
