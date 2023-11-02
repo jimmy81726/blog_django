@@ -7,7 +7,7 @@
 
 
 <h1>{{user.username}}的文章列表</h1>
-
+<hr>
 <!-- 迴圈取的所有文章,views已有用filter篩選 -->
 {% for post in user_posts %}
 <li>
@@ -23,8 +23,10 @@
         - 作者:{{post.author}}
         - 發布時間:{{post.date_posted}}<br>
 
-        {{ post.content|slice:':50'|safe}}......<small><a href="{% url 'article-detail' post.pk %}">(更多)</a></small>
-        <br><br>
+        {{ post.content|truncatechars_html:50|safe }}
+        ......
+        <small><a href="{% url 'article-detail' post.pk %}">(更多)</a></small>
+
     </small>
 
 </li>

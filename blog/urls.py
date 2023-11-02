@@ -16,10 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from user.views import PasswordChange
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("post_comment.urls")),
     path("user/", include("user.urls")),
+    # 沒辦法改UserChangeForm的改密碼的連結,只好土法煉鋼照內部的設定增加這個url
+    path("<int:id>/password/", PasswordChange.as_view(), name="password"),
 ]

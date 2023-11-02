@@ -1,7 +1,7 @@
 from django import forms
 from .models import Post, Category
 
-# 把category的資料表抓過來
+# 把category的資料表抓過來,[('Category1', 'Category1'), ('Category2', 'Category2')],左邊為存在數據庫的值,右邊為顯示的值
 choices = Category.objects.all().values_list("name", "name")
 
 # 把querylist更改成一般list
@@ -12,6 +12,7 @@ for i in choices:
 
 # 發布文章所用的form繼承自Post model
 class PostForm(forms.ModelForm):
+    # 在Meta下寫是針對內部已有的更新
     class Meta:
         model = Post
         fields = ("title", "author", "category", "content")

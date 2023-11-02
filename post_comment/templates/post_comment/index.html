@@ -15,9 +15,12 @@
         - <a href="{% url 'category-article' post.category %}">{{post.category}}</a>
         - 作者:{{post.author}}
         - 發布時間:{{post.date_posted}}<br>
+        <!-- 導入 truncatechars_html讓html標籤切割正常閉合,會自動換行-->
+        {{ post.content|truncatechars_html:50|safe }}
+        ......
+        <small><a href="{% url 'article-detail' post.pk %}">(更多)</a></small>
+        <!-- {{ post.content|slice:':200'|safe}}......<small><a href="{% url 'article-detail' post.pk %}">(更多)</a></small> 這個做為問題討論-->
 
-        {{ post.content|slice:':50'|safe}}......<small><a href="{% url 'article-detail' post.pk %}">(更多)</a></small>
-        <br><br>
     </small>
 </li>
 

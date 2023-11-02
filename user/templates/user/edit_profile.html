@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}
+個人檔案
+{% endblock %}
+{% block content %}
+<h1>編輯個人檔案</h1>
+<hr>
+<form action="" method="POST">
+    {% csrf_token %}
+    {{form.as_p}}
+    <button class="btn btn-success">更新</button>
+
+
+
+</form>
+{% endblock %}
+
+
+
+<!-- 名稱:{{user.username}}<br>
+信箱:{{user.email}}<br>
+最後登入時間:{{user.last_login}}<br>
+加入時間:{{user.date_joined}}<br> -->

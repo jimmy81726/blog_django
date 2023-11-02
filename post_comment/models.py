@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
+from ckeditor.fields import RichTextField
 
 
 # 只是建立類別名,以供文章發布和修改用,只可由超級使用者在admin增加修改
@@ -18,7 +19,8 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    content = models.TextField()
+    content = RichTextField(blank=True, null=True)
+    # content = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)
     category = models.CharField(max_length=255, default="其他")
     # 讓likes與User做關聯,利用related_name反向查詢

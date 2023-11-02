@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}
+密碼更變
+{% endblock %}
+{% block content %}
+<h1>密碼更變成功...即將跳轉首頁</h1>
+<script>
+    var originalUrl = '/';
+    var cleanUrl = originalUrl.replace(/^\//, '');
+
+    // 三秒後導向網頁
+    setTimeout(function () {
+        window.location.href = '/' + cleanUrl;
+    }, 3000);
+</script>
+{% endblock %}

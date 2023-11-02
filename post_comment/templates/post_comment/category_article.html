@@ -9,7 +9,7 @@
 <h1>所有 {{cate}} 的文章....</h1>
 {% if cated_posts %}
 {% for post in cated_posts %}
-
+<hr>
 <li>
     <a href="{% url 'article-detail' post.pk %}">{{post.title}}</a>
     <small>
@@ -17,7 +17,9 @@
         - 作者:{{post.author}}
         - 發布時間:{{post.date_posted}}<br>
     </small>
-    {{ post.content|slice:':50'|safe}}......<small><a href="{% url 'article-detail' post.pk %}">(更多)</a></small>
+    {{ post.content|truncatechars_html:50|safe }}
+    ......
+    <small><a href="{% url 'article-detail' post.pk %}">(更多)</a></small>
 
 </li>
 
