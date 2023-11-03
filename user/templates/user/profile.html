@@ -1,0 +1,45 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block title%}
+{{post.title}}
+{% endblock %}
+{% block content %}
+
+<small>創作者介紹</small>
+<div class="card mb-3" style="max-width: 600px;">
+    <div class="row g-0">
+        <!-- 注意這邊只是要判斷有沒,不用後面.url -->
+        <div class="col-md-4">
+            {% if user_profile.profile_pic %}
+            <img src="{{ user_profile.profile_pic.url }}" class="img-fluid rounded-start">
+            {% else %}
+            <img src="{% static 'post_comment/images/defaut_usericon.png' %}" class="img-fluid rounded-start">
+            {% endif %}
+        </div>
+
+
+
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{post.author}}</h5>
+                <small>
+                    <p class="card-text text-muted">
+                        {% if user_profile.fb_url %}
+                        <a href="{{ user_profile.fb_url }}">Facebook</a> |
+                        {% endif %}
+                        {% if user_profile.ig_url %}
+                        <a href="{{ user_profile.ig_url }}">Instagram</a> |
+                        {% endif %}
+                        {% if user_profile.twitter_url %}
+                        <a href="{{ user_profile.twitter_url }}">X</a>
+                        {% endif %}
+                </small>
+                <p class="card-text text-muted">{{user_profile.selfinfo}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br>
+
+
+{% endblock %}

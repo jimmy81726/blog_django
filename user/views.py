@@ -1,6 +1,6 @@
 from typing import Any
-from django.shortcuts import render, redirect
-
+from django.shortcuts import render, redirect, get_object_or_404
+from post_comment.models import ProfileCard
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
@@ -8,6 +8,19 @@ from django.views import generic
 from .forms import Registerform, EditProfileform, PasswordChange
 from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordChangeView
+
+
+class ProfileShow(generic.DetailView):
+    model = ProfileCard
+    template_name = "user/profile.html"
+
+    def get_context_data(self, *args, **kwards):
+        # 抓到特定的profile
+        user_profile = get_object_or_404(ProfileCard, id=self.kwargs["pk"])
+        # 把父類的參數抓下來
+        context = super(ProfileShow, self).get_context_data(*args, **kwards)
+        context["user_profile"] = user_profile
+        return context
 
 
 # 只為了跳轉該網頁
