@@ -6,6 +6,35 @@ from django.contrib.auth.forms import (
 )
 from django.contrib.auth.models import User
 from django import forms
+from post_comment.models import ProfileCard
+
+
+class EditProfileCardform(forms.ModelForm):
+    class Meta:
+        model = ProfileCard
+        exclude = ["user"]
+        fields = "__all__"
+        widgets = {
+            "selfinfo": forms.Textarea(attrs={"class": "form-control"}),
+            "fb_url": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+            "ig_url": forms.TextInput(attrs={"class": "form-control"}),
+            "twitter_url": forms.TextInput(
+                attrs={
+                    "class": "form-control",
+                }
+            ),
+        }
+        labels = {
+            "selfinfo": "自我介紹",
+            "fb_url": "Facebook",
+            "ig_url": "Instagram",
+            "twitter_url": "X",
+            "profile_pic": "大頭貼",
+        }
 
 
 class EditProfileform(UserChangeForm):

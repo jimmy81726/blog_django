@@ -8,6 +8,14 @@ from django.views import generic
 from .forms import Registerform, EditProfileform, PasswordChange
 from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordChangeView
+from .forms import EditProfileCardform
+
+
+class EditProfileCard(generic.UpdateView):
+    model = ProfileCard
+    template_name = "user/edit_profilecard.html"
+    form_class = EditProfileCardform
+    success_url = reverse_lazy("index")
 
 
 class ProfileShow(generic.DetailView):

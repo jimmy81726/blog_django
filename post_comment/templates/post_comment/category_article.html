@@ -7,9 +7,11 @@
 
 <!-- cated_post已被fliter篩選 -->
 <h1>所有 {{cate}} 的文章....</h1>
+<hr>
+<br>
 {% if cated_posts %}
 {% for post in cated_posts %}
-<hr>
+
 <li>
     <a href="{% url 'article-detail' post.pk %}">{{post.title}}</a>
     <small>

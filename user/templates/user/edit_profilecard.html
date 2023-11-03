@@ -1,0 +1,70 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block title%}
+更新簽名檔
+{% endblock %}
+{% block content %}
+
+<!-- 必須確認此文章的登入者才能更改 -->
+{% if user.is_authenticated and user.id == profilecard.user.id %}
+<h1>更新簽名檔</h1>
+<hr>
+<br>
+<div class="form-group">
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+
+        <button class="btn btn-success">更新</button>
+    </form>
+</div>
+
+{% else %}
+<script>
+    var originalUrl = '/';
+    var cleanUrl = originalUrl.replace(/^\//, '');
+
+    // 三秒後導向網頁
+    setTimeout(function () {
+        window.location.href = '/' + cleanUrl;
+    }, 3000);
+</script>
+網頁將重新導向...
+{% endif %}
+<hr>
+<small>目前的簽名檔</small>
+<div class="card mb-3" style="max-width: 600px;">
+    <div class="row g-0">
+        <!-- 注意這邊只是要判斷有沒,不用後面.url -->
+        <div class="col-md-4">
+            {% if profilecard.profile_pic %}
+            <img src="{{ profilecard.profile_pic.url }}" class="img-fluid rounded-start">
+            {% else %}
+            <img src="{% static 'post_comment/images/defaut_usericon.png' %}" class="img-fluid rounded-start">
+            {% endif %}
+        </div>
+
+
+
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">{{post.author}}</h5>
+                <small>
+                    <p class="card-text text-muted">
+                        {% if profilecard.fb_url %}
+                        <a href="{{ profilecard.fb_url }}">Facebook</a> |
+                        {% endif %}
+                        {% if profilecard.ig_url %}
+                        <a href="{{ profilecard.ig_url }}">Instagram</a> |
+                        {% endif %}
+                        {% if profilecard.twitter_url %}
+                        <a href="{{ profilecard.twitter_url }}">X</a>
+                        {% endif %}
+                </small>
+                <p class="card-text text-muted">{{profilecard.selfinfo}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<br><br>
+{% endblock %}

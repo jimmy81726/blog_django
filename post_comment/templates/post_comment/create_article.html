@@ -7,13 +7,13 @@
 {% if user.is_authenticated %}
 <h1>撰寫文章</h1>
 <hr>
-<br><br>
+<br>
 <div class="form-group">
     <form action="" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{form.media}}
         {{form.as_p}}
-        <button>發布</button>
+        <button class="btn btn-success">發布</button>
     </form>
 </div>
 <!-- 當下網頁的使用者資訊,回傳給form id=author,將value改成當下的使用者 -->

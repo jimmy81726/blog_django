@@ -45,6 +45,9 @@
                         <a class="nav-link" href="{% url 'write-article' %}">撰寫文章</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{% url 'edit-profilecard' user.profilecard.id %}">編輯個人簽名檔</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'edit-profile' %}">帳號中心</a>
                     </li>
                     <li class="nav-item">
