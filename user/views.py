@@ -1,4 +1,6 @@
 from typing import Any
+from django.forms.models import BaseModelForm
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from post_comment.models import ProfileCard
 from django.contrib.auth.forms import PasswordChangeForm
@@ -9,6 +11,17 @@ from .forms import Registerform, EditProfileform, PasswordChange
 from django.urls import reverse_lazy
 from django.contrib.auth.views import PasswordChangeView
 from .forms import EditProfileCardform
+
+
+class CreateProfileCard(generic.CreateView):
+    model = ProfileCard
+    template_name = "user/create_profilecard.html"
+    form_class = EditProfileCardform
+
+    # 使用此方法回傳當下的user給form
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class EditProfileCard(generic.UpdateView):

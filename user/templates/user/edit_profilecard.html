@@ -5,7 +5,7 @@
 {% endblock %}
 {% block content %}
 
-<!-- 必須確認此文章的登入者才能更改 -->
+<!-- 必須確認此文章的登入者才能更改 ,views直接回傳的post是profilecard-->
 {% if user.is_authenticated and user.id == profilecard.user.id %}
 <h1>更新簽名檔</h1>
 <hr>

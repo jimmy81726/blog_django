@@ -7,6 +7,7 @@ from .views import (
     change_success,
     ProfileShow,
     EditProfileCard,
+    CreateProfileCard,
 )
 from django.contrib.auth import views as auth_views
 
@@ -17,6 +18,11 @@ urlpatterns = [
     path("show-profile/<int:pk>", ProfileShow.as_view(), name="show-profile"),
     path(
         "edit-profilecard/<int:pk>", EditProfileCard.as_view(), name="edit-profilecard"
+    ),
+    path(
+        "create-profilecard/",
+        CreateProfileCard.as_view(),
+        name="create-profilecard",
     ),
     path("change-success/", change_success, name="change-success"),
     path("login/", user_login, name="login"),

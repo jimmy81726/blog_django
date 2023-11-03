@@ -1,0 +1,35 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block title%}
+新建簽名檔
+{% endblock %}
+{% block content %}
+
+<!-- 必須確認此文章的登入者才能更改 不能用user.id == profilecard.user.id因為就還沒建立,所以沒有profilecard.user.id-->
+{% if user.is_authenticated %}
+<h1>新建簽名檔</h1>
+<hr>
+<br>
+<div class="form-group">
+    <form action="" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+
+        <button class="btn btn-success">建立</button>
+    </form>
+</div>
+<br><br>
+{% else %}
+<script>
+    var originalUrl = '/';
+    var cleanUrl = originalUrl.replace(/^\//, '');
+
+    // 三秒後導向網頁
+    setTimeout(function () {
+        window.location.href = '/' + cleanUrl;
+    }, 3000);
+</script>
+網頁將重新導向...
+{% endif %}
+
+{% endblock %}

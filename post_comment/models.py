@@ -18,6 +18,9 @@ class ProfileCard(models.Model):
     def __str__(self):
         return str(self.user)
 
+    def get_absolute_url(self):
+        return reverse("index")
+
 
 # 只是建立類別名,以供文章發布和修改用,只可由超級使用者在admin增加修改
 class Category(models.Model):

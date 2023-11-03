@@ -44,9 +44,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'write-article' %}">撰寫文章</a>
                     </li>
+                    {% if user.profilecard.user.id %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'edit-profilecard' user.profilecard.id %}">編輯個人簽名檔</a>
                     </li>
+                    {% else %}
+                    <!-- 尚未建立的時候,沒有profilecard.id來指定 -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'create-profilecard' %}">建立個人簽名檔</a>
+                    </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'edit-profile' %}">帳號中心</a>
                     </li>
