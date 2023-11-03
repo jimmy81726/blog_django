@@ -15,7 +15,7 @@ class PostForm(forms.ModelForm):
     # 在Meta下寫是針對內部已有的更新
     class Meta:
         model = Post
-        fields = ("title", "author", "category", "content")
+        fields = ("title", "author", "category", "images", "content")
         widgets = {
             "title": forms.TextInput(
                 attrs={"class": "form-control", "placeholder": "請輸入標題"}
@@ -41,6 +41,7 @@ class PostForm(forms.ModelForm):
             "author": "作者",
             "category": "文章類型",
             "content": "內容",
+            "images": "開頭圖片",
         }
 
 

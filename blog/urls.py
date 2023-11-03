@@ -14,6 +14,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from user.views import PasswordChange
@@ -25,4 +27,4 @@ urlpatterns = [
     path("user/", include("user.urls")),
     # 沒辦法改UserChangeForm的改密碼的連結,只好土法煉鋼照內部的設定增加這個url
     path("<int:id>/password/", PasswordChange.as_view(), name="password"),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

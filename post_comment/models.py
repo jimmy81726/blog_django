@@ -4,6 +4,21 @@ from django.urls import reverse
 from ckeditor.fields import RichTextField
 
 
+class ProfileCard(models.Model):
+    # 先建立與User的連結,連到外鍵author
+    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
+    selfinfo = models.TextField()
+    fb_url = models.CharField(max_length=255, null=True, blank=True)
+    ig_url = models.CharField(max_length=255, null=True, blank=True)
+    twitter_url = models.CharField(max_length=255, null=True, blank=True)
+    profile_pic = models.ImageField(
+        null=True, blank=True, upload_to="images/profilecard"
+    )
+
+    def __str__(self):
+        return str(self.user)
+
+
 # 只是建立類別名,以供文章發布和修改用,只可由超級使用者在admin增加修改
 class Category(models.Model):
     name = models.CharField(max_length=255)
@@ -19,6 +34,8 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=255)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
+    # 圖片上傳至images/
+    images = models.ImageField(null=True, blank=True, upload_to="images/")
     content = RichTextField(blank=True, null=True)
     # content = models.TextField()
     date_posted = models.DateTimeField(auto_now_add=True)
