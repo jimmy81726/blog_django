@@ -1,0 +1,21 @@
+{% extends 'base.html'%}
+{% block title%}
+留下評論
+{% endblock %}
+{% block content %}
+
+
+<h1>留下評論</h1>
+<hr>
+<br>
+<div class="form-group">
+    <form action="" method="POST">
+        {% csrf_token %}
+
+        {{form.as_p}}
+        <button class="btn btn-success">發布</button>
+    </form>
+</div>
+<br><br>
+
+{% endblock %}

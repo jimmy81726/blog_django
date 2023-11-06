@@ -4,6 +4,18 @@ from django.urls import reverse
 from ckeditor.fields import RichTextField
 
 
+class Comment(models.Model):
+    # class "Comment"等等用comments來代替
+    # 建立連結,每個post建立相對應的comment,""避免循環導入問題
+    post = models.ForeignKey("Post", related_name="comments", on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    comment_content = models.TextField()
+    comment_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.post.title + " | " + str(self.name)
+
+
 class ProfileCard(models.Model):
     # 先建立與User的連結,連到外鍵author
     user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)

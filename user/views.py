@@ -1,5 +1,3 @@
-from typing import Any
-from django.forms.models import BaseModelForm
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from post_comment.models import ProfileCard
@@ -18,7 +16,7 @@ class CreateProfileCard(generic.CreateView):
     template_name = "user/create_profilecard.html"
     form_class = EditProfileCardform
 
-    # 使用此方法回傳當下的user給form
+    # 使用此方法回傳當下的user給form,不然本來要自己選
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)

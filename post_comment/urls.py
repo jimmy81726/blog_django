@@ -7,10 +7,12 @@ from .views import (
     EditArticle,
     DelecteArticle,
     like_article,
+    LeaveComment,
 )
 
 urlpatterns = [
     path("", ArticleShow.as_view(), name="index"),
+    path("leave-comment/<int:pk>", LeaveComment.as_view(), name="leave-comment"),
     # views默認要用int:pk命名
     path("article-detail/<int:pk>", ArticleDetailShow.as_view(), name="article-detail"),
     path("write-article/", WriteAritcle.as_view(), name="write-article"),

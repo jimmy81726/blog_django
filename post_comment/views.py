@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 
 from django.views.generic import (
@@ -8,12 +8,29 @@ from django.views.generic import (
     UpdateView,
     DeleteView,
 )
-from .models import Post
-from .forms import PostForm, EditForm
-from django.urls import reverse_lazy, reverse
-from django.http import HttpResponseRedirect
+from .models import Post, Comment
+from .forms import PostForm, EditForm, CommentForm
+from django.urls import reverse_lazy
 
 
+class LeaveComment(CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = "./post_comment/create_comment.html"
+
+    # fields = "__all__"
+    # 使用此方法回傳當下特定的文章給form指定
+    def form_valid(self, form):
+        # 把要傳的內容給form中name='post_id',kwargs["pk"]獲取url中名為pk的參數
+        form.instance.post_id = self.kwargs["pk"]
+        return super().form_valid(form)
+
+    # 為了回到本頁,article-detail本來就要帶個參數
+    def get_success_url(self):
+        return reverse_lazy("article-detail", kwargs={"pk": self.kwargs["pk"]})
+
+
+# 按下like/Unlike button之後的功能
 def like_article(request, pk):
     # 獲取form表單的button name為post_id
     post_id = request.POST.get("post_id")
@@ -28,7 +45,7 @@ def like_article(request, pk):
         liked = True
 
     # 改變導入網址
-    return HttpResponseRedirect(reverse("article-detail", args=[str(pk)]))
+    return redirect("article-detail", pk=pk)
 
 
 class ArticleShow(ListView):
@@ -42,15 +59,15 @@ class ArticleDetailShow(DetailView):
     model = Post
     template_name = "./post_comment/article_detail.html"
 
-    # 在class-based的基礎上要回傳值的方法def get_context_data,型態為QuerySet
+    # 在class-based的基礎上要回傳值的方法
     def get_context_data(self, *args, **kwards):
         postlike = get_object_or_404(Post, id=self.kwargs["pk"])
-        # 把父類的參數抓下來
+        # 用super使用父類的get_context_data方法傳給模板
         context = super(ArticleDetailShow, self).get_context_data(*args, **kwards)
         total_likes = postlike.total_likes()
 
         liked = False
-        # 用到manytomany的方法去檢察關聯性
+        # 用到manytomany的方法去檢察關聯性,看當下登入的人有沒有按過讚
         if postlike.likes.filter(id=self.request.user.id).exists():
             liked = True
 
@@ -64,7 +81,7 @@ class WriteAritcle(CreateView):
     form_class = PostForm
     template_name = "./post_comment/create_article.html"
     # 把model的所有欄位顯示
-    # fields = "__all__"
+    # fields = "__all__" 假如沒有form要用form.as_p一定要打這行
 
 
 class EditArticle(UpdateView):
