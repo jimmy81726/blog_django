@@ -85,6 +85,19 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+# # 把database改為用mysql,可上傳至AWS
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.mysql",
+#         "NAME": "blogdjango",
+#         "USER": "root",
+#         # "HOST": "localhost",
+#         # "PASSWORD": "",
+#         "HOST": "database-2.cy9x3whguoya.ap-northeast-1.rds.amazonaws.com",
+#         "PASSWORD": "password",
+#         "PORT": "3306",
+#     }
+# }
 
 
 # Password validation

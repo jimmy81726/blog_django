@@ -38,6 +38,7 @@ class PostForm(forms.ModelForm):
         widget=forms.Select(attrs={"class": "form-select"}),
         label="文章類型",
         empty_label="請選擇",
+        required=False,
     )
 
     class Meta:
@@ -79,6 +80,7 @@ class EditForm(forms.ModelForm):
         widget=forms.Select(attrs={"class": "form-select"}),
         label="文章類型",
         empty_label="請選擇",
+        required=False,
     )
 
     class Meta:
