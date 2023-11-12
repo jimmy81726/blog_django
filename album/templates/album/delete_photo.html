@@ -1,0 +1,32 @@
+{% extends 'base.html'%}
+{% block title%}
+刪除相片
+{% endblock %}
+{% block content %}
+
+{% if user.is_authenticated and user == photo.p_user %}
+<h1>刪除相片</h1>
+<br><br>
+<div class="form-group">
+    <p>確定要刪除 {{photo.a_name}}?</p>
+    <small style="color: red;">是否確定?</small>
+    <form action="" method="POST">
+        {% csrf_token %}
+        <button>刪除</button>
+    </form>
+</div>
+{% else %}
+<!-- 先把網頁url前墜清空要導向登入畫面 -->
+<script>
+    var originalUrl = '/';
+    var cleanUrl = originalUrl.replace(/^\//, '');
+
+    // 三秒後導向網頁
+    setTimeout(function () {
+        window.location.href = '/' + cleanUrl;
+    }, 3000);
+</script>
+請重新登入,網頁將重新導向...
+{% endif %}
+
+{% endblock %}

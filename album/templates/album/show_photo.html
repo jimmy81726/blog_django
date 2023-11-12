@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h1>{{photo.p_name}}</h1>
+{% if user.is_authenticated and user == album.a_author %}
+<small><a href="{% url 'del-photo' photo.pk photo.p_album.id %}">(刪除)</a></small>
+{% endif %}
+<hr>
+<a href="#" onclick="history.back();">回到上一頁</a>
+
+<div><img src="/media/{{photo.p_images}}" /></div>
+
+{% endblock %}

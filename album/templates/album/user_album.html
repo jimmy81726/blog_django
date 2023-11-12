@@ -1,0 +1,39 @@
+{% extends 'base.html'%}
+{% load static %}
+{% load extras %}
+{% block title%}
+{{user.username}}的相簿
+{% endblock %}
+{% block content %}
+
+
+
+<h1>{{user.username}}的相簿</h1>
+<br>
+我的相簿總數：{{total_useralbum}}
+{% if user.is_authenticated %}
+<a href="{% url 'add-alb' %}">(新增相簿)</a>
+{% endif %}
+<hr>
+<br>
+<!-- 迴圈取的所有文章,views已有用filter篩選 -->
+{% for album in user_albums %}
+<div>
+    <div>
+
+        <a href="{% url 'detail-alb' album.pk %}">{{album.a_title}}</a>
+
+        <small><a href="{% url 'del-alb' album.pk %}">(刪除相簿)</a></small>
+        <small>- 擁有者:{{album.a_author}}</small><br>
+        <small>- 建立於:{{album.a_date}}</small>
+        <br>
+        {% if lengths|extras:forloop.counter0 == 0 %}
+        <img src="{% static 'album/images/nopic.jpg' %}" alt="暫無圖片" width="160" height="160" />
+        {% else %}
+        <img src="/media/{{photos|extras:forloop.counter0}}" width="160" height="160" />
+        {% endif %}
+    </div>
+</div>
+<p><small><small>&emsp;&emsp;&emsp;&emsp;&emsp;共 {{lengths|extras:forloop.counter0}} 張</small></small></p><br>
+{% endfor %}
+{% endblock %}

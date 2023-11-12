@@ -1,0 +1,37 @@
+{% extends 'base.html'%}
+{% load static %}
+{% load extras %}
+{% block title%}
+歡迎來到BBBLOGG!!
+{% endblock %}
+{% block content %}
+
+
+<!-- 模板上下文變量預設object_list -->
+<h1>所有相簿....</h1>
+<br>
+相簿總數：{{totalalbum}}
+<hr>
+<br>
+{% for album in albums %}
+<div>
+    <div>
+
+        <a href="{% url 'detail-alb' album.pk %}">{{album.a_title}}</a>
+
+        <small>- 擁有者:{{album.a_author}}</small><br>
+        <small>- 建立於:{{album.a_date}}</small>
+        <br>
+        {% if lengths|extras:forloop.counter0 == 0 %}
+        <img src="{% static 'album/images/nopic.jpg' %}" alt="暫無圖片" width="160" height="160" />
+        {% else %}
+        <img src="/media/{{photos|extras:forloop.counter0}}" width="160" height="160" />
+        {% endif %}
+    </div>
+
+</div>
+
+<p><small><small>&emsp;&emsp;&emsp;&emsp;&emsp;共 {{lengths|extras:forloop.counter0}} 張</small></small></p><br>
+
+{% endfor %}
+{% endblock %}

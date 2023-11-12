@@ -1,0 +1,37 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block title%}
+{{monophoto.p_album.a_title}}
+{% endblock %}
+{% block content %}
+
+{% if not photos %}
+<p style="color: red;">{{message}}</p>
+
+<br>
+{% else %}
+<div> 標題 :{{monophoto.p_album.a_title}}</div>
+<div>照片總數 :{{totalphoto}} </div>
+<div>
+    <p><strong>拍攝時間</strong> :{{monophoto.p_album.a_date}}
+        <strong>拍攝地點</strong> :{{monophoto.p_album.a_location}}
+    </p>
+    <a href="{% url 'add-photo'%}">新增相片</a>
+    <hr>
+    <p>相簿介紹 : {{monophoto.p_album.a_text}}</p>
+</div>
+{% for photo in photos %}
+
+<div>
+    <div><a href="{% url 'show-photo' photo.id album %}">{{photo.p_name}}</a>
+        <div><a href="{% url 'show-photo' photo.id album %}"><img src="/media/{{photo.p_images}}" width="160"
+                    height="160" /></a></div>
+
+        <span>點閱次數：</span>{{photo.p_hit}}
+
+    </div>
+    <br><br>
+</div>
+{% endfor %}
+{% endif %}
+{% endblock %}

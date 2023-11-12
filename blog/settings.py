@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "post_comment.apps.PostCommentConfig",
     "user.apps.UserConfig",
     "ckeditor",
+    "album.apps.AlbumConfig",
 ]
 
 MIDDLEWARE = [
