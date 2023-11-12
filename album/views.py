@@ -10,13 +10,14 @@ from django.views.generic import (
 )
 from .forms import AlbumForm, PhotoForm
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404
 
 
 class DeletePhoto(DeleteView):
     model = Photo
     template_name = "./album/delete_photo.html"
     # 刪除完重新導向index
-    success_url = reverse_lazy("index")
+    success_url = reverse_lazy("user-allalb")
 
 
 class AddPhoto(CreateView):
@@ -35,8 +36,10 @@ def show_photo(request, photoid=None, albumid=None):  # 顯示單張相片
 
 def album_show(request, albumid=None):  # 顯示相簿
     album = albumid  # 以區域變數傳送給html
+    album_object = get_object_or_404(Album, id=albumid)
+    a_author_id = album_object.a_author.id if album_object.a_author else None
 
-    photos = Photo.objects.filter(p_album__id=album).order_by("-id")  # 讀取所有相片
+    photos = Photo.objects.filter(p_album__id=album).order_by("-id")  # 讀取albumid相同的相片
     if photos:
         monophoto = photos[0]  # 第1張相片
     else:
@@ -50,7 +53,7 @@ class DeleteAlbum(DeleteView):
     model = Album
     template_name = "./album/delete_album.html"
     # 刪除完重新導向index
-    success_url = reverse_lazy("index")
+    success_url = reverse_lazy("user-allalb")
 
 
 class AddAlbum(CreateView):

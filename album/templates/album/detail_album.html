@@ -7,7 +7,9 @@
 
 {% if not photos %}
 <p style="color: red;">{{message}}</p>
-
+{% if user.id == a_author_id %}
+<a href="{% url 'add-photo' %}">新增相片</a>
+{% endif %}
 <br>
 {% else %}
 <div> 標題 :{{monophoto.p_album.a_title}}</div>
@@ -16,7 +18,9 @@
     <p><strong>拍攝時間</strong> :{{monophoto.p_album.a_date}}
         <strong>拍攝地點</strong> :{{monophoto.p_album.a_location}}
     </p>
-    <a href="{% url 'add-photo'%}">新增相片</a>
+    {% if user.is_authenticated and user.id == monophoto.p_album.a_author_id %}
+    <a href="{% url 'add-photo' %}">新增相片</a>
+    {% endif %}
     <hr>
     <p>相簿介紹 : {{monophoto.p_album.a_text}}</p>
 </div>

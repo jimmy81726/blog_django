@@ -18,7 +18,7 @@ class Album(models.Model):
         return self.a_title + " | " + str(self.a_author)
 
     def get_absolute_url(self):
-        return reverse("index")
+        return reverse("show-allalb")
 
 
 class Photo(models.Model):
@@ -35,4 +35,4 @@ class Photo(models.Model):
         return self.p_name
 
     def get_absolute_url(self):
-        return reverse("index")
+        return reverse("show-allalb")
