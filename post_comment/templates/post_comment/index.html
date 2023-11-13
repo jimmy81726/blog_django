@@ -9,23 +9,18 @@
 <h1>最新文章....</h1>
 <hr>
 <br>
-{% for post in object_list %}
+<div class="list-group">
+    {% for post in object_list %}
+    <a href="{% url 'article-detail' post.pk %}" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{post.title}}</h5>
+            <small class="text-body-secondary">發布時間:{{post.date_posted}} </small>
+        </div>
+        <p class="mb-1">{{ post.content|truncatechars_html:50|safe }}<small><small>...(更多)</small></small></p>
+        <small class="text-body-secondary">作者:{{post.author}} 分類:{{post.category}}</small>
+    </a>
+    {% endfor %}
 
-<li>
-    <a href="{% url 'article-detail' post.pk %}">{{post.title}}</a>
-    <small>
-        - <a href="{% url 'category-article' post.category %}">{{post.category}}</a>
-        - 作者:{{post.author}}
-        - 發布時間:{{post.date_posted}}<br>
-        <!-- 導入 truncatechars_html讓html標籤切割正常閉合,會自動換行-->
-        {{ post.content|truncatechars_html:50|safe }}
-        ......
-        <small><a href="{% url 'article-detail' post.pk %}">(更多)</a></small>
-        <!-- {{ post.content|slice:':200'|safe}}......<small><a href="{% url 'article-detail' post.pk %}">(更多)</a></small> 這個做為問題討論-->
-
-    </small>
-</li>
-{% endfor %}
-
-
+</div>
+<br><br>
 {% endblock %}

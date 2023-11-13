@@ -95,7 +95,7 @@ class DelecteArticle(DeleteView):
     model = Post
     template_name = "./post_comment/delete_article.html"
     # 刪除完重新導向index
-    success_url = reverse_lazy("index")
+    success_url = reverse_lazy("user-post")
 
 
 @login_required
@@ -113,7 +113,7 @@ def user_post(request):
 # 同類的文章顯示
 def category_article(request, cate):
     # 選出Post資料表中category為cate的所有文章
-    cated_posts = Post.objects.filter(category=cate)
+    cated_posts = Post.objects.filter(category=cate).order_by("-date_posted")
     return render(
         request,
         "./post_comment/category_article.html",

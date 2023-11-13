@@ -10,27 +10,18 @@
 <hr>
 <br>
 <!-- 迴圈取的所有文章,views已有用filter篩選 -->
-{% for post in user_posts %}
-<li>
-    <a href="{% url 'article-detail' post.pk %}">{{post.title}}</a>
-    {% if user.is_authenticated %}
-    <small>
-        -
-        <a href="{% url 'edit-article' post.pk %}">(Edit)</a>
-        <a href="{% url 'delete-article' post.pk %}">(Delete)</a>
+<div class="list-group">
+    {% for post in user_posts %}
+    <a href="{% url 'article-detail' post.pk %}" class="list-group-item list-group-item-action">
+        <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1">{{post.title}}</h5>
+            <small class="text-body-secondary">發布時間:{{post.date_posted}} </small>
+        </div>
+        <p class="mb-1">{{ post.content|truncatechars_html:50|safe }}<small><small>...(更多)</small></small></p>
+        <small class="text-body-secondary">作者:{{post.author}} 分類:{{post.category}}</small>
+    </a>
+    {% endfor %}
 
-        {% endif %}
-        - <a href="{% url 'category-article' post.category %}">{{post.category}}</a>
-        - 作者:{{post.author}}
-        - 發布時間:{{post.date_posted}}<br>
-
-        {{ post.content|truncatechars_html:50|safe }}
-        ......
-        <small><a href="{% url 'article-detail' post.pk %}">(更多)</a></small>
-
-    </small>
-
-</li>
-
-{% endfor %}
+</div>
+<br><br>
 {% endblock %}
