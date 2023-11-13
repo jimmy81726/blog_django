@@ -57,6 +57,7 @@ class Post(models.Model):
     category = models.CharField(max_length=255, default="其他")
     # 讓likes與User做關聯,利用related_name反向查詢
     likes = models.ManyToManyField(User, related_name="blog_posts")
+    hit = models.IntegerField(default=0)
 
     # 定義一個處理likes的方法
     def total_likes(self):

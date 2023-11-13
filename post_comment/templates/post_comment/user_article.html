@@ -18,7 +18,7 @@
             <small class="text-body-secondary">發布時間:{{post.date_posted}} </small>
         </div>
         <p class="mb-1">{{ post.content|truncatechars_html:50|safe }}<small><small>...(更多)</small></small></p>
-        <small class="text-body-secondary">作者:{{post.author}} 分類:{{post.category}}</small>
+        <small class="text-body-secondary">作者:{{post.author}}&emsp;分類:{{post.category}}&emsp;點閱次數:{{post.hit}}</small>
     </a>
     {% endfor %}
 

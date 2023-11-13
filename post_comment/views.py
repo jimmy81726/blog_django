@@ -61,14 +61,18 @@ class ArticleDetailShow(DetailView):
 
     # 在class-based的基礎上要回傳值的方法
     def get_context_data(self, *args, **kwards):
-        postlike = get_object_or_404(Post, id=self.kwargs["pk"])
+        post = get_object_or_404(Post, id=self.kwargs["pk"])
+
+        post.hit += 1
+        post.save()
+
         # 用super使用父類的get_context_data方法傳給模板
         context = super(ArticleDetailShow, self).get_context_data(*args, **kwards)
-        total_likes = postlike.total_likes()
+        total_likes = post.total_likes()
 
         liked = False
         # 用到manytomany的方法去檢察關聯性,看當下登入的人有沒有按過讚
-        if postlike.likes.filter(id=self.request.user.id).exists():
+        if post.likes.filter(id=self.request.user.id).exists():
             liked = True
 
         context["liked"] = liked
