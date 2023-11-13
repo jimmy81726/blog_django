@@ -21,11 +21,11 @@ class LeaveComment(CreateView):
     # fields = "__all__"
     # 使用此方法回傳當下特定的文章給form指定
     def form_valid(self, form):
-        # 把要傳的內容給form中name='post_id',kwargs["pk"]獲取url中名為pk的參數
+        # 把要傳的內容給form中Comment資料表的'post_id',kwargs["pk"]獲取url中名為pk的參數
         form.instance.post_id = self.kwargs["pk"]
         return super().form_valid(form)
 
-    # 為了回到本頁,article-detail本來就要帶個參數
+    # 為了回到本頁,才有表單提交成立,article-detail本來就要帶個參數
     def get_success_url(self):
         return reverse_lazy("article-detail", kwargs={"pk": self.kwargs["pk"]})
 

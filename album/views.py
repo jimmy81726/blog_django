@@ -16,14 +16,24 @@ from django.shortcuts import get_object_or_404
 class DeletePhoto(DeleteView):
     model = Photo
     template_name = "./album/delete_photo.html"
+
     # 刪除完重新導向index
-    success_url = reverse_lazy("user-allalb")
+    def get_success_url(self):
+        return reverse_lazy("detail-alb", kwargs={"albumid": self.kwargs["albumid"]})
 
 
 class AddPhoto(CreateView):
     model = Photo
     form_class = PhotoForm
     template_name = "./album/add_photo.html"
+
+    def form_valid(self, form):
+        # 把要傳的內容給photo資料表中'p_album_id',kwargs["albumid"]獲取url中名為albumid的參數
+        form.instance.p_album_id = self.kwargs["albumid"]
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy("detail-alb", kwargs={"albumid": self.kwargs["albumid"]})
 
 
 def show_photo(request, photoid=None, albumid=None):  # 顯示單張相片
@@ -35,11 +45,13 @@ def show_photo(request, photoid=None, albumid=None):  # 顯示單張相片
 
 
 def album_show(request, albumid=None):  # 顯示相簿
-    album = albumid  # 以區域變數傳送給html
+    album = albumid  # 以album_id變數傳送給html
     album_object = get_object_or_404(Album, id=albumid)
     a_author_id = album_object.a_author.id if album_object.a_author else None
 
-    photos = Photo.objects.filter(p_album__id=album).order_by("-id")  # 讀取albumid相同的相片
+    photos = Photo.objects.filter(p_album_id=album).order_by(
+        "-id"
+    )  # 抓albumid和讀取所有albumid相同的相片
     if photos:
         monophoto = photos[0]  # 第1張相片
     else:

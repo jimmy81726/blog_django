@@ -6,18 +6,9 @@ class PhotoForm(forms.ModelForm):
     # 在Meta下寫是針對內部已有的更新
     class Meta:
         model = Photo
-        fields = ("p_name", "p_user", "p_album", "p_images")
+        fields = ("p_name", "p_user", "p_images")
         widgets = {
             "p_name": forms.TextInput(attrs={"class": "form-control"}),
-            "p_album": forms.TextInput(
-                attrs={
-                    "class": "form-control",
-                    "value": "",
-                    "id": "p_album",
-                    # 讓作者欄為當下的登入者,且沒有更改必要就隱藏起來
-                    "type": "hidden",
-                }
-            ),
             "p_user": forms.TextInput(
                 attrs={
                     "class": "form-control",

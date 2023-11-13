@@ -1,14 +1,15 @@
 {% extends 'base.html'%}
 {% load static %}
 {% block title%}
-{{monophoto.p_album.a_title}}
+{{album_object.a_title}}
 {% endblock %}
 {% block content %}
 
 {% if not photos %}
 <p style="color: red;">{{message}}</p>
 {% if user.id == a_author_id %}
-<a href="{% url 'add-photo' %}">新增相片</a>
+<!-- 這邊的album是album id喔,詳情請看views -->
+<a href="{% url 'add-photo' album %}">新增相片</a>
 {% endif %}
 <br>
 {% else %}
@@ -19,23 +20,29 @@
         <strong>拍攝地點</strong> :{{monophoto.p_album.a_location}}
     </p>
     {% if user.is_authenticated and user.id == monophoto.p_album.a_author_id %}
-    <a href="{% url 'add-photo' %}">新增相片</a>
+    <a href="{% url 'add-photo' monophoto.p_album.id %}">新增相片</a>
     {% endif %}
     <hr>
     <p>相簿介紹 : {{monophoto.p_album.a_text}}</p>
 </div>
-{% for photo in photos %}
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for photo in photos %}
+    <div class="col">
+        <div class="card h-100">
+            <a href="{% url 'show-photo' photo.id album %}">
+                <img src="/media/{{photo.p_images}}" class="card-img-top"></a>
+            <div class="card-body">
+                <h5 class="card-title">{{photo.p_name}}</h5>
 
-<div>
-    <div><a href="{% url 'show-photo' photo.id album %}">{{photo.p_name}}</a>
-        <div><a href="{% url 'show-photo' photo.id album %}"><img src="/media/{{photo.p_images}}" width="160"
-                    height="160" /></a></div>
-
-        <span>點閱次數：</span>{{photo.p_hit}}
-
+            </div>
+            <div class="card-footer">
+                <small class="text-body-secondary">點閱次數：{{photo.p_hit}}</small>
+            </div>
+        </div>
     </div>
-    <br><br>
+    {% endfor %}
 </div>
-{% endfor %}
+<br><br>
 {% endif %}
+
 {% endblock %}

@@ -11,7 +11,7 @@ urlpatterns = [
     path(
         "show-photo/<int:photoid>/<int:albumid>/", views.show_photo, name="show-photo"
     ),
-    path("add-photo/", views.AddPhoto.as_view(), name="add-photo"),
+    path("add-photo/<int:albumid>", views.AddPhoto.as_view(), name="add-photo"),
     path(
         "del-photo/<int:pk>/<int:albumid>/",
         views.DeletePhoto.as_view(),

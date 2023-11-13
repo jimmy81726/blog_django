@@ -16,24 +16,29 @@
 {% endif %}
 <hr>
 <br>
-<!-- 迴圈取的所有文章,views已有用filter篩選 -->
-{% for album in user_albums %}
-<div>
-    <div>
 
-        <a href="{% url 'detail-alb' album.pk %}">{{album.a_title}}</a>
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for album in user_albums %}
+    <div class="col">
+        <div class="card h-100">
+            {% if lengths|extras:forloop.counter0 == 0 %}<a href="{% url 'detail-alb' album.pk %}">
+                <img src="{% static 'album/images/nopic.jpg' %}" class="card-img-top" alt="暫無圖片"></a>
+            {% else %}
+            <a href="{% url 'detail-alb' album.pk %}">
+                <img src="/media/{{photos|extras:forloop.counter0}}" class="card-img-top" alt="暫無圖片"></a>
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{album.a_title}} - <small>共 {{lengths|extras:forloop.counter0}} 張</small><a
+                        href="{% url 'del-alb' album.pk %}">(刪除相簿)</a></h5>
 
-        <small><a href="{% url 'del-alb' album.pk %}">(刪除相簿)</a></small>
-        <small>- 擁有者:{{album.a_author}}</small><br>
-        <small>- 建立於:{{album.a_date}}</small>
-        <br>
-        {% if lengths|extras:forloop.counter0 == 0 %}
-        <img src="{% static 'album/images/nopic.jpg' %}" alt="暫無圖片" width="160" height="160" />
-        {% else %}
-        <img src="/media/{{photos|extras:forloop.counter0}}" width="160" height="160" />
-        {% endif %}
+                <p class="card-text"><u>擁有者:{{album.a_author}} </u></p>
+            </div>
+            <div class="card-footer">
+                <small class="text-body-secondary">建立於:{{album.a_date}}</small>
+            </div>
+        </div>
     </div>
+    {% endfor %}
 </div>
-<p><small><small>&emsp;&emsp;&emsp;&emsp;&emsp;共 {{lengths|extras:forloop.counter0}} 張</small></small></p><br>
-{% endfor %}
+<br><br>
 {% endblock %}
