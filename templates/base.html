@@ -70,7 +70,8 @@
                     </li>
 
                     <li class="nav-item" style="color: white;">
-                        <a class="nav-link active" href="/">{{user.username}}歡迎回來~</a>
+                        <a class="nav-link active"
+                            href="{% url 'show-profile' user.profilecard.id %}">{{user.username}}歡迎回來~</a>
 
                     </li>
 

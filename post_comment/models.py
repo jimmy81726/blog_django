@@ -5,7 +5,7 @@ from ckeditor.fields import RichTextField
 
 
 class Comment(models.Model):
-    # class "Comment"等等用comments來代替
+    # class "Comment"等等用comments來代替反向查詢(post.comments.xxx)
     # 建立連結,每個post建立相對應的comment,""避免循環導入問題
     post = models.ForeignKey("Post", related_name="comments", on_delete=models.CASCADE)
     name = models.CharField(max_length=255)

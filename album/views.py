@@ -17,7 +17,7 @@ class DeletePhoto(DeleteView):
     model = Photo
     template_name = "./album/delete_photo.html"
 
-    # 刪除完重新導向index
+    # 刪除完重新導向
     def get_success_url(self):
         return reverse_lazy("detail-alb", kwargs={"albumid": self.kwargs["albumid"]})
 

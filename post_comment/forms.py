@@ -38,7 +38,7 @@ class PostForm(forms.ModelForm):
         widget=forms.Select(attrs={"class": "form-select"}),
         label="文章類型",
         empty_label="請選擇",
-        required=False,
+        required=True,
     )
 
     class Meta:
@@ -80,12 +80,12 @@ class EditForm(forms.ModelForm):
         widget=forms.Select(attrs={"class": "form-select"}),
         label="文章類型",
         empty_label="請選擇",
-        required=False,
+        required=True,
     )
 
     class Meta:
         model = Post
-        fields = ("title", "category", "content")
+        fields = ("title", "category", "images", "content")
         widgets = {
             "title": forms.TextInput(
                 attrs={"class": "form-control", "placeholder": "請輸入標題"}
@@ -101,4 +101,5 @@ class EditForm(forms.ModelForm):
             "title": "標題",
             "category": "文章類型",
             "content": "內容",
+            "images": "開頭圖片",
         }

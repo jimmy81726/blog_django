@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-=^!ps#%&zg+k@asj73-=v@z^nq1g3r00kupv5m%l1f@nrj_#yk"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# 上傳要改成False
+# 上傳要改成False,但會影響圖片權限
 DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "user.apps.UserConfig",
     "ckeditor",
     "album.apps.AlbumConfig",
+    "api.apps.ApiConfig",
 ]
 
 MIDDLEWARE = [
@@ -88,7 +89,7 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
-# # 把database改為用mysql,可上傳至AWS
+# 把database改為用mysql,可上傳至AWS
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",

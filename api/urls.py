@@ -18,19 +18,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from user.views import PasswordChange
+from . import views
 
 
-urlpatterns = (
-    [
-        path("admin/", admin.site.urls),
-        path("", include("post_comment.urls")),
-        path("album/", include("album.urls")),
-        path("user/", include("user.urls")),
-        path("api/", include("api.urls")),
-        # 沒辦法改UserChangeForm的改密碼的連結,只好土法煉鋼照內部的設定增加這個url
-        path("<int:id>/password/", PasswordChange.as_view(), name="password"),
-    ]
-    + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-)
+urlpatterns = [
+    path("post/", views.post_api, name="post-api"),
+    path("post/user/<int:id>/", views.user_post_api, name="user-post-api"),
+]

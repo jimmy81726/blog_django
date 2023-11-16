@@ -71,7 +71,7 @@ class ArticleDetailShow(DetailView):
         total_likes = post.total_likes()
 
         liked = False
-        # 用到manytomany的方法去檢察關聯性,看當下登入的人有沒有按過讚
+        # 用到manytomany的方法去檢察關聯性,看當下登入的人有沒有按過讚,影響templates的顯示
         if post.likes.filter(id=self.request.user.id).exists():
             liked = True
 
