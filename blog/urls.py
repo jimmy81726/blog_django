@@ -29,3 +29,5 @@ urlpatterns = [
     # 沒辦法改UserChangeForm的改密碼的連結,只好土法煉鋼照內部的設定增加這個url
     path("<int:id>/password/", PasswordChange.as_view(), name="password"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
